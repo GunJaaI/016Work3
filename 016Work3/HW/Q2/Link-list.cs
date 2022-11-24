@@ -30,18 +30,25 @@ class CircularLinkedList<T> where T : struct
     {
         if(index == 0)
         {
-            Node<T> tailPtr = this.head;
-            int tailIndex = this.length - 1;
-            while(tailIndex > 0)
+            if(this.length == 1)
             {
-                tailPtr = tailPtr.Next();
-                tailIndex--;
+                this.head = null;
             }
-            tailPtr.SetNext(this.head.Next());
+            else
+            {
+                Node<T> tailPtr = this.head;
+                int tailIndex = this.length - 1;
+                while(tailIndex > 0)
+                {
+                    tailPtr = tailPtr.Next();
+                    tailIndex--;
+                }
+                tailPtr.SetNext(this.head.Next());
 
-            Node<T> ptr = this.head;
-            this.head = this.head.Next();
-            ptr.SetNext(null);
+                Node<T> ptr = this.head;
+                this.head = this.head.Next();
+                ptr.SetNext(null);
+            }
         }
         else
         {
@@ -126,18 +133,4 @@ class CircularLinkedList<T> where T : struct
             this.Add(other.Get(i));
         }
     }
-
-    public void display()
-    {
-        Node<T> ptr = this.head;
-        int i = 0;
-        while (i < this.GetLength())
-        {
-            Console.Write(ptr.GetValue() + "-->");
-            ptr = ptr.Next();
-            i = i + 1;
-        }
-        Console.WriteLine();
-    }
-    
 }

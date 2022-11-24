@@ -1,67 +1,58 @@
-﻿class Program
+﻿    class Program
 {
     static void Main(string[] args) {
+        Queue<char> Belt = new Queue<char>();
+
         PrintMenuScreen();
-        Input();
+        string Beforecut = " ";
+        string Cutitem = " ";
+        Beforecut = InputOnBelt(Belt, Beforecut);
+        Cutitem = Calculate(Belt, Cutitem);
+
+        Beforecut += Cutitem;
+        Console.WriteLine(Beforecut);
     }
     static void PrintMenuScreen() {
         Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        Console.WriteLine("       Insert ( J,G,O,R ) or other letter to finish          ");
+        Console.WriteLine("       Insert ( L,M,S ) or other letter to finish          ");
         Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
     }
-    static void Input() {
-        CircularLinkedList<char> l = new CircularLinkedList<char>();
-            int num = 0;
-            int Radius = l.GetLength();
-        
-        while (true)
-        {
+    static string InputOnBelt(Queue<char> Belt, string Beforecut) {
+        while (true) {
             Console.Write("Input : ");
             char checkInput = char.Parse(Console.ReadLine());
-            if ((checkInput != 'J') && (checkInput != 'G') && (checkInput != 'O') && (checkInput != 'R')) {
-                break; 
-            }
-
-            if (Radius == 0) {
-                if ((checkInput == 'J') || (checkInput == 'G') || (checkInput == 'O')) {
-                    l.Add(checkInput);
-                    num += 1;
-                    Radius++;
-                } else {
-                    Console.WriteLine("Invalid pattern.");
+            if ((checkInput == 'L')||(checkInput == 'M')||(checkInput == 'S')) {
+                if (checkInput == 'L') {
+                    Belt.Push('1');
+                    Beforecut += "1";
+                } else if (checkInput == 'M') {
+                    Belt.Push('2');
+                    Beforecut += "2";
+                } else if (checkInput == 'S') {
+                    Belt.Push('3');
+                    Beforecut += "3";
                 }
-            } else if (checkInput == 'R') {
-                if (l.Get(l.GetLength() + num - 1) == 'R') {
-                    Console.WriteLine("Invalid pattern.");
-                } else {
-                    l.Add(checkInput);
-                    num += 1;
-                }
-            } else if ((checkInput == 'J') || (checkInput == 'G') || (checkInput == 'O')) {
-                if (l.Get(l.GetLength() + num - 1) == 'R') {
-                    if (l.Get(l.GetLength() + num - 2) == checkInput) {
-                        Console.WriteLine("Invalid pattern.");
-                    } else if ((checkInput == 'J') || (checkInput == 'G') || (checkInput == 'O')) {
-                        l.Add(checkInput);
-                        num += 1;
-                    } else { Console.WriteLine("Invalid pattern."); }
-                } else if ((l.Get(l.GetLength() + num - 3) == 'G') &&
-                           (l.Get(l.GetLength() + num - 2) == 'G') &&
-                           (l.Get(l.GetLength() + num - 1) == 'G') && checkInput == 'G') {
-                    if (l.Get(l.GetLength() + num - 4) == 'G') {
-                        Console.WriteLine("Invalid pattern.");
-                    } else {
-                        Console.WriteLine("Invalid pattern.");
+            } else {break;}
+        }
+        return Beforecut;
+    }
+    static string Calculate(Queue<char> Belt,string Cutitem) {
+            for (int i = 0; i < Belt.GetLength(); i++) {
+                char Fruit = Belt.Pop();
+                if (Fruit == '1') {
+                    for (int j = 0; j < 2; j++) {
+                        //Cutitem += "2";
+                        Belt.Push('2');
                     }
-                } else {
-                    l.Add(checkInput);
-                    num += 1;
+                    Cutitem += "22 ";
+                } else if (Fruit == '2') {
+                    for (int k = 0; k < 3; k++) {
+                        //Cutitem += "3";
+                        Belt.Push('3');
+                    }
+                    Cutitem += "333 ";
                 }
             }
-        }
-        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=");
-        for (int i = 0; i < l.GetLength(); i++) {
-            Console.Write(l.Get(i));
-        }
+            return Cutitem;
     }
 }
