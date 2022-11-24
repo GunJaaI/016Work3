@@ -48,11 +48,7 @@
                 } else if ((l.Get(l.GetLength() + num - 3) == 'G') &&
                            (l.Get(l.GetLength() + num - 2) == 'G') &&
                            (l.Get(l.GetLength() + num - 1) == 'G') && checkInput == 'G') {
-                    if (l.Get(l.GetLength() + num - 4) == 'G') {
-                        Console.WriteLine("Invalid pattern.");
-                    } else {
-                        Console.WriteLine("Invalid pattern.");
-                    }
+                    Console.WriteLine("Invalid pattern.????");
                 } else {
                     l.Add(checkInput);
                     num += 1;

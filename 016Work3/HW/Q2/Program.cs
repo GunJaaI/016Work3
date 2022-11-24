@@ -8,6 +8,7 @@
         string Cutitem = " ";
         Beforecut = InputOnBelt(Belt, Beforecut);
         Cutitem = Calculate(Belt, Cutitem);
+        Cutitem = Calculate(Belt, Cutitem);
 
         Beforecut += Cutitem;
         Console.WriteLine(Beforecut);
